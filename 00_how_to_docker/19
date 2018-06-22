@@ -1,0 +1,10 @@
+mkdir -p ~/root
+docker run --name Abathur -v ~/docker_python:/root -p 3000:3000 -dit python:2-slim
+# run creates and starts a new container
+# For interactive processes (like a shell), you must use -i -t together in order to allocate a tty for the container process.
+# -it attaches us to an interactive tty in the container. Now we can run as many commands in the container as we want.
+
+docker exec Abathur pip install flask
+# exec is used for running commands in existing containers
+docker cp hello.py Abathur:/root
+docker exec --env FLASK_APP=/root/hello.py Abathur flask run --host=0.0.0.0 --port=3000

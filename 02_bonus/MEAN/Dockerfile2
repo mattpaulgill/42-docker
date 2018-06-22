@@ -1,0 +1,30 @@
+FROM ubuntu:16.04
+
+RUN apt-get -q update && apt-get install -yq \
+	apt-utils build-essential gcc make git sudo curl && \
+	apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+	# cleans temporary files and folders, cached packages, packages lists, and temporary files after installation
+
+# Node.js (3000), MongoDB (27017), LiveReload (35729)
+EXPOSE 3000 27017 35729
+
+# Node.js installation with its dependencies bower and gulp
+RUN curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - && \
+  apt-get install -yq nodejs && \
+  apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+  npm install --quiet -g bower gulp
+
+# create app directory
+# -p flag makes parent directories if necessary
+RUN mkdir -p /usr/src/app
+WORKDIR /user/src/app
+
+# clone mean.io repo
+# use npm to install server dependencies
+# use bower to install client dependencies
+RUN git clone https://github.com/linnovate/mean.git /user/src/app && \
+	npm install --quiet  && \
+	bower install --config.interactive=false -q --allow-root
+
+# mean.io's gulpfile will run several commands to clean everything, compacts Javascript files, etc.
+CMD ["gulp"]

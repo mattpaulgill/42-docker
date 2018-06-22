@@ -1,0 +1,4 @@
+docker service scale marines=20
+
+# To see the marines fighting the zerg swarm:
+# docker service logs -f marines

@@ -1,0 +1,4 @@
+docker swarm init --advertise-addr $(docker-machine ip Char)
+# docker swarm init --advertise-addr <MANAGER-IP>
+# the --advertise-addr is the address other nodes in the Docker swarm use to connect into your node
+# port number which defaults to 2377

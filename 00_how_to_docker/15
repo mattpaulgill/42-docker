@@ -1,0 +1,6 @@
+docker run --name roach-warden -p 8081:80 --link spawning-pool:mysql -d phpmyadmin/phpmyadmin
+
+# docker run –name roach-warden /	# Container name
+#		-p 8081:80 /				# Port
+#		–link mysql:db /			# Link to MySQL container
+#		-d phpmyadmin/phpmyadmin	# Run as daemon
